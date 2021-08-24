@@ -1,6 +1,6 @@
 # Projects made during the selective process of Nautilus (UFRJ) #
 
-# Solar system:
+# Solar system
 
 **How do I run the program?**
 First, you need to have on your computer the [ROS](http://wiki.ros.org/) aplication. After having it, you have to type `roscore` in your prompt to run the Master and then launch the program in another prompt with `roslaunch`. Then, you can run RViz just by typing `rviz` in the prompt.
