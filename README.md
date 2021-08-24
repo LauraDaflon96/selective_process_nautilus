@@ -28,6 +28,8 @@ The code is designed to a car formed by Arduino Nano V3 Atmega328, DC motors and
 **How the code works:**
 The code control the motors in two of the three wheels that are in the car. With this it can make the car changes it's direction. 
 
-# **How to use the program:**
+# OpenCv (Nemo)
+
+**How to use the program:**
 In the terminal, go to the directory where you downloaded the file and type `python 2 nemo.py`. Than it will display the original video and the video where you can see only the fishes. To exit type `q`. You need to save the file of the video in the Documents section, otherwise, it will require a change in the code.
 
