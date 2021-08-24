@@ -1,0 +1,7 @@
+<?xml version="1.8"?> 
+ <launch>
+    <rosparam command="load" file="$(find solar)/param/reference.yaml"/>
+    <node name='system' pkg="solar" type='solar_node.py' output='screen'>
+    </node>
+  </launch>
+

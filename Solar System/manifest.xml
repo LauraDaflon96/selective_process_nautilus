@@ -1,0 +1,15 @@
+<package>
+  <description brief="Solar">
+
+     Solar
+
+  </description>
+  <author>idle</author>
+  <license>BSD</license>
+  <review status="unreviewed" notes=""/>
+  <url>http://ros.org/wiki/Solar</url>
+  <depend package="rospy"/>
+  <depend package="tf2"/>
+  <depend package="roscpp"/>
+
+</package>
