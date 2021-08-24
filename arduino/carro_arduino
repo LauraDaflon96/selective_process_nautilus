@@ -1,0 +1,119 @@
+ // Primeiro, declara-se os pins, sendo 2 para cada motor. Os motores foram chamados de motor1 e motor2, os pinos, então, de A e B. O motor 1 foi considerado como o motor da esquerda e o motor 2, o motor da direita.
+const int motorA1 = 10;
+const int motorB1 = 9;
+const int motorA2 = 6;
+const int motorB2 = 5;
+
+int state_temp;
+int vSpeed = 200;   // Define velocidade padrão 0 - 255.
+int vSpeedLow = 100;
+char state;
+ 
+void setup() {
+  Serial.begin(9600);
+  pinMode(motorA1,OUTPUT);
+  pinMode(motorB1, OUTPUT);
+  pinMode(motorA2, OUTPUT);
+  pinMode(motorB2, OUTPUT);
+
+  digitalWrite(motorA1, LOW);
+  digitalWrite(motorB1, LOW);
+  digitalWrite(motorA2, LOW);
+  digitalWrite(motorB2, LOW);
+}
+ 
+void loop() {
+ 
+  //Confere o input, para saber qual será o comando do arduino.
+  if (Serial.available() > 0) {
+    state_temp = Serial.read();
+    state = state_temp;
+  }
+ 
+  // Se o estado recebido for igual a '8', o carro se movimenta para frente. E, para tal, ativa-se o pin A do motor 1 e do motor 2, a fim de que os dois vão para frente.
+  if (state == '8') {
+    Serial.println("Comando para Frente");
+    digitalWrite(motorA1, vSpeed);
+    digitalWrite(motorB1, LOW);
+    digitalWrite(motorA2, vSpeed);
+    digitalWrite(motorB2, LOW);
+  }
+
+    // Se o estado recebido for igual a '7', o carro se movimenta para Frente Esquerda. E, para tal, ativa-se o pin A do motor 1(esquerda) com uma velocidade mais baixa e o pin A do motor 2(direita) com uma velocidade maior, a fim de que ele vire. No entanto, como deve seguir na diagonal, e define o state para 8, fazendo o carro seguir para frente naquela direção.
+    else if (state == '7') {  
+      Serial.println("Comando para Frente-Esquerda");
+      digitalWrite(motorA1, vSpeedLow);
+      digitalWrite(motorB1, LOW);
+      digitalWrite(motorA2, vSpeed);
+      digitalWrite(motorB2, LOW);
+      state = '8'
+  }
+
+    // Se o estado recebido for igual a '9', o carro se movimenta para Frente Direita. Para que isso ocorra, ativa-se o pin A do motor 1 com velocidade mais alta e o pin A do motor 2 com uma velocidade menor. Desse modo ele virará para direita com menor velocidade. Após virar um pouco, ele muda o state para 8, assim ele seguirá em frente
+    else if (state == '9') {   
+    Serial.println("Comando para Frente-Direita");
+      digitalWrite(motorA1, vSpeed);
+      digitalWrite(motorB1, LOW);
+      digitalWrite(motorA2, vSpeedLow);
+      digitalWrite(motorB2, LOW);
+      state = '8'
+  }
+
+  // Se o estado recebido for igual a '2', o carro se movimenta para trás.
+  else if (state == '2') { 
+    Serial.println("Comando para Trás");
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorB1, vSpeed);
+      digitalWrite(motorA2, LOW);
+      digitalWrite(motorB2, vSpeed);
+  }
+
+   // Se o estado recebido for igual a '1', o carro se movimenta para Trás Esquerda. O pin B do motor 1 é ativado com menor velocidade e o do motor 2 com maior velocidad, para que ele vire para esquerda, só que um pouco para trás . Tal qual a lógica do para frente-esquerda, o carro segue dando ré na direção desejada, a partir da definição do state como 2.
+   else if (state == '1') {  
+    Serial.println("Comando para Trás-Esquerda");
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorB1, vSpeedLow);
+      digitalWrite(motorA2, LOW);
+      digitalWrite(motorB2, vSpeed);
+      state = '2'
+  }
+
+  // Se o estado recebido for igual a '3', o carro se movimenta para Trás Direita. O pin B do motor 1 é ativado com maior velocidade e o do motor 2 com uma velocidade menor. Tal qual a lógica para frente-direita, define-se o state como 2, para que, então o carro dê ré nessa direção.
+  else if (state == '3') {  
+    Serial.println("Comando para Trás-Direita");
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorB1, vSpeed);
+      digitalWrite(motorA2, LOW);
+      digitalWrite(motorB2, vSpeedLow);
+      state = '2'
+  }
+
+  // Se o estado recebido for igual a '4', o carro se movimenta para esquerda. Para se movimentar totalmente para esquerda, o carro deve virar mais do que no caso de frente-esquerda ou trás-esquerda. Portanto, ativase o pin B do motor 1 e o pin A do motor 2, ambos com velocidade padrão. Assim, a virada será maior e ele estará, de fato, na esquerda. Agora no sentido certo, o estado vai para 8, para que ele siga pela esquerda.
+  else if (state == '4') {   
+    Serial.println("Comando para Esquerda");
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorB1, vSpeed);
+      digitalWrite(motorA2, vSpeed);
+      digitalWrite(motorB2, LOW);
+      state = '8'
+
+  }
+
+  // Se o estado recebido for igual a '6', o carro se movimenta para direita.Para se movimentar totalmente para direita, o carro deve virar mais do que no caso de frente-direita ou trás-direita. Portanto, ativase o pin B do motor 2 e o pin A do motor 1, ambos com velocidade padrão. Assim, a virada será maior e ele estará, de fato, na direita. Agora no sentido certo, o estado vai para 8, para que ele siga pela direita.
+  else if (state == '6') {   
+    Serial.println("Comando para Direita");
+      digitalWrite(motorA1, vSpeed);
+      digitalWrite(motorB1, LOW);
+      digitalWrite(motorA2, LOW);
+      digitalWrite(motorB2, vSpeed);
+  }
+
+  // Se o estado recebido for igual a '5', o carro permanece parado. Para parar, basta colocar todos os pins em Low state.
+  else if (state == '5') {   
+    Serial.println("Comando para Parar");
+      digitalWrite(motorA1, LOW);
+      digitalWrite(motorB1, LOW);
+      digitalWrite(motorA2, LOW);
+      digitalWrite(motorB2, LOW);
+  }
+}
